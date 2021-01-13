@@ -12,13 +12,10 @@ def log_generator():
     #     for line in f:
     #         yield line.replace("-", "").replace("\"", "").replace("[", "").replace("]", "").split()
 
-    # with ZipFile("../logs/access_log_Aug95.zip") as zipped:
-    #     info = zipped.read('access_log_Aug95')
-    #     # for line in info:
-    #     #     print(line)
-    #     print(type(info))
-
-    with ZipFile("logs/access_log_Aug95.zip") as zf:
-        with io.TextIOWrapper(zf.open("access_log_Aug95"), encoding="cp1252") as f:
-            for line in f:
-                yield line.replace("-", "").replace("\"", "").replace("[", "").replace("]", "").split()
+    try:
+        with ZipFile("logs/access_log_Aug95.zip") as zf:
+            with io.TextIOWrapper(zf.open("access_log_Aug95"), encoding="cp1252") as f:
+                for line in f:
+                    yield line.replace("-", "").replace("\"", "").replace("[", "").replace("]", "").split()
+    except FileNotFoundError as ex:
+        print(f"Could not find the zip file specified!{ex}")
